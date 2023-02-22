@@ -12,7 +12,7 @@
 // </div>`        })
 //     }).catch((e) => {    console.log(e, "error")
 // })
-
+//
 // fetch("https://restcountries.com/v3.1/all")
 //     .then(data => data.json())
 //     .then(result =>{
@@ -89,25 +89,32 @@ let row = document.querySelector(".row")
 const btn = document.querySelector(".search-btn")
 const input = document.querySelector(".input")
 const error = document.querySelector(".error")
+const select = document.querySelector(".search-dog")
 
 btn.addEventListener("click",() =>{
 search()
 })
+select.addEventListener('change',() =>{
+    search()
+})
+
 input.addEventListener('keydown',(event)=>{
     if (event.key === 'Enter'){
         search()
     }
 })
 
+
 function search (){
-    fetch(`https://dog.ceo/api/breed/${input.value.toLowerCase()}/images`)
+    fetch(`https://dog.ceo/api/breed/${input.value.toLowerCase() || select.value.toLowerCase()}/images`)
         .then(res => res.json())
         .then(data =>{
             row.innerHTML = ''
             console.log(data.message.slice(0,10))
             data.message.length ? data.message.slice(0,10).map(el =>{
                 row.innerHTML += `<div class="d-flex col-4 my-5">
-<img src="${el}" alt="" class="image my-4" style=" width: 450px;height: 400px;margin-right: 20px"> 
+<img src="${el}" alt="" class="image my-4" style=" width: 100%;height: auto;margin-right: 20px">
+
 </div>`
             }):error.innerHTML += 'нечего не найден'
         })
@@ -127,3 +134,60 @@ function search (){
 // </div>`
 //         })
 //     })
+//
+// const delay = ms =>{
+//     return new Promise(r => setTimeout(() => r(),ms))
+// }
+//
+//
+//
+// const url = 'https://jsonplaceholder.typicode.com/todos'
+// async function legendTodo (){
+//     console.log('to do start...')
+//    try{
+//        await delay(2000)
+//        const response = await  fetch(url)
+//        const data = response.json()
+//        console.log('Data')
+//        row.innerHTML += `<div class="col-4">
+// </div>`
+//    }catch (e){
+//        console.error(e)
+//    }
+//
+// }
+// legendTodo()
+
+//
+//
+// function fetchTodos (){
+//     console.log('Fetch todo start...')
+//     return delay(3000)
+//         .then(() =>{
+//         return fetch(url)
+//     }).then(response => response.json())
+// }
+// fetchTodos()
+//     .then(data =>{
+//         console.log('Data')
+//     })
+//     .catch(e => console.error(e))
+
+
+// async function fetchTodos () {
+//     console.log('Fetch todo start...')
+//     try {
+//         await delay(3000)
+//         const  response = await fetch(url)
+//         const  data = await  response.json()
+//         console.log('Data')
+//     }catch (e){
+//         console.error(e)
+//     }
+//
+// }
+// fetchTodos()
+
+
+
+
